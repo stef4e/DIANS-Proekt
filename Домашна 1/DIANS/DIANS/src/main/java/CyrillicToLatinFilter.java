@@ -51,12 +51,13 @@ public class CyrillicToLatinFilter implements Filter<String> {
             }
 
             String output = parts[2] + "," + parts[3];
+            String contactInfo = parts[4];
             DatabaseInfo info;
             if (latinString.toString().equals("klub „privilidj“")) {
                 name = "klub privilige";
-                info = new DatabaseInfo(name, parts[1], output);
+                info = new DatabaseInfo(name, parts[1], output, contactInfo);
             } else {
-                info = new DatabaseInfo(latinString.toString(), parts[1], output);
+                info = new DatabaseInfo(latinString.toString(), parts[1], output, contactInfo);
             }
             return info.toString();
         }

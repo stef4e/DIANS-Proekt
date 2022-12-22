@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="DIANS lab1 kod" />
         <module name="untitled6" />
+        <module name="DIANS" />
       </profile>
     </annotationProcessing>
   </component>
