@@ -1,3 +1,5 @@
+import java.io.StringBufferInputStream;
+
 public class FilterByName implements Filter<String> {
     @Override
     public String execute(String input) {
@@ -6,50 +8,53 @@ public class FilterByName implements Filter<String> {
         if (parts.length < 20) {
             return null;
         }
-        if (parts[108].contains("nightclub") || parts[108].contains("bar")) {
+        String barOrNightclub = parts[108];
+        if (barOrNightclub.contains("nightclub") || barOrNightclub.contains("bar")) {
+            String name = parts[18];
             String street = parts[106];
             String phone = parts[137];
             String email = parts[159];
             String website = parts[92];
             //TODO: separate in specific method
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder contactInfo = new StringBuilder();
             if(!street.isEmpty()) {
-                stringBuilder.append("Address: ");
-                stringBuilder.append(street).append("; ");
+                contactInfo.append("Address: ");
+                contactInfo.append(street).append("; ");
             }
             if(!phone.isEmpty()) {
-                stringBuilder.append("Phone: ");
-                stringBuilder.append(phone).append("; ");
+                contactInfo.append("Phone: ");
+                contactInfo.append(phone).append("; ");
             }
             if(!email.isEmpty()) {
-                stringBuilder.append("E-mail: ");
-                stringBuilder.append(email).append("; ");
+                contactInfo.append("E-mail: ");
+                contactInfo.append(email).append("; ");
             }
             if(!website.isEmpty()){
-                stringBuilder.append("Website: ");
-                stringBuilder.append(website).append(";");
+                contactInfo.append("Website: ");
+                contactInfo.append(website).append(";");
             }
             DatabaseInfo info;
-            if (parts[18].isEmpty()) {
+            if (name.isEmpty()) {
                 return null;
             }
-            if (parts[749].contains("POLYGON")) {
-                String output = parts[749].replace("POLYGON ", "");
+            String coordinates = parts[749];
+            if (coordinates.contains("POLYGON")) {
+                String output = coordinates.replace("POLYGON ", "");
                 output = output.replace("((", "");
                 output = output.replace(" ", ",");
                 if(output.isEmpty()){
                     return null;
                 }
-                info = new DatabaseInfo(parts[18], parts[108], output, stringBuilder.toString());
+                info = new DatabaseInfo(name, barOrNightclub, output, contactInfo.toString());
             } else {
-                String output = parts[749].replace("POINT ", "");
+                String output = coordinates.replace("POINT ", "");
                 output = output.replace("(", "");
                 output = output.replace(" ", ",");
                 output = output.replace(")", "");
                 if(output.isEmpty()){
                     return null;
                 }
-                info = new DatabaseInfo(parts[18], parts[108], output, stringBuilder.toString());
+                info = new DatabaseInfo(name, barOrNightclub, output, contactInfo.toString());
             }
             return info.toString();
         }

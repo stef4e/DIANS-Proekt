@@ -2,16 +2,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-
 public class CyrillicToLatinFilter implements Filter<String> {
     @Override
     public String execute(String input) {
-        StringBuilder latinString = new StringBuilder();
+        StringBuilder nameToLatin = new StringBuilder();
+        StringBuilder contactInfoToLatin = new StringBuilder();
         if (input != null) {
             input = input.toLowerCase();
             String[] parts = input.split(",", -1);
             String name = parts[0];
-
             Map<String, String> cyrillicToLatin = new HashMap<>();
             cyrillicToLatin.put("а", "a");
             cyrillicToLatin.put("б", "b");
@@ -44,20 +43,32 @@ public class CyrillicToLatinFilter implements Filter<String> {
             cyrillicToLatin.put("џ", "dj");
             cyrillicToLatin.put("ш", "sh");
 
+            String contactInfo = parts[4];
+
             for (int i = 0; i < name.length(); i++) {
                 String c = name.substring(i, i + 1);
                 String l = cyrillicToLatin.get(c);
-                latinString.append(Objects.requireNonNullElse(l, c));
+                nameToLatin.append(Objects.requireNonNullElse(l, c));
+            }
+
+            if(!Objects.equals(contactInfo, "")) {
+            for(int i = 0; i < contactInfo.length(); i++){
+                    String c1 = contactInfo.substring(i, i + 1);
+                    String l1 = cyrillicToLatin.get(c1);
+                    contactInfoToLatin.append(Objects.requireNonNullElse(l1, c1));
+                }
             }
 
             String output = parts[2] + "," + parts[3];
-            String contactInfo = parts[4];
             DatabaseInfo info;
-            if (latinString.toString().equals("klub „privilidj“")) {
+            if (nameToLatin.toString().equals("epicetar")){
+                name = "epicentar";
+                info = new DatabaseInfo(name, parts[1], output, contactInfoToLatin.toString());
+            } else if (nameToLatin.toString().equals("klub „privilidj“")) {
                 name = "klub privilige";
-                info = new DatabaseInfo(name, parts[1], output, contactInfo);
+                info = new DatabaseInfo(name, parts[1], output, contactInfoToLatin.toString());
             } else {
-                info = new DatabaseInfo(latinString.toString(), parts[1], output, contactInfo);
+                info = new DatabaseInfo(nameToLatin.toString(), parts[1], output, contactInfoToLatin.toString());
             }
             return info.toString();
         }
