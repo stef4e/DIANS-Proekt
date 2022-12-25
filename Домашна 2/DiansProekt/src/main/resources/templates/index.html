@@ -47,22 +47,35 @@
         </div>
     </div>
 
+    <div id="search-bar">
+        <form th:method="POST" th:action="@{/}">
+            <label>Search Location: <input type="text" placeholder="Search Location..." name="name"></label>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 
+    <!--        <div id="search-bar-2">-->
+    <!--            <form>-->
+    <!--                <label>Desired Position: <input type="text" placeholder="Search Starting Position..." name="startLokacija"></label>-->
+    <!--                <button type="submit">Submit</button>-->
+    <!--            </form>-->
+    <!--        </div>-->
 
-        <div id="search-bar">
-            <form th:method="post " th:action="@{/}">
-                <label>Search Location: <input type="text" placeholder="Search Location..." name="name"></label>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
+    <div>
+        Info about Bar/Nightclub:
+        <br/>
+        <td th:text="${name}"></td>
+        <td th:text="${barOrClub}"></td>
+        <br/>
+        <td th:text="${x}"></td>
+        <br/>
+        <td th:text="${y}"></td>
+        <br/>
+        <td th:text="${contactInfo}"></td>
+        <br/>
+    </div>
 
-<!--        <div id="search-bar-2">
-            <form>
-                <label>Desired Position: <input type="text" placeholder="Search Starting Position..." name="startLokacija"></label>
-                <button type="submit">Submit</button>
-            </form>
-        </div>-->
-
+    <br/>
     <div id="map"></div>
 
     <script th:inline="javascript">
@@ -81,28 +94,93 @@
 
         var notNull=[[${lokal} != null]];
 
-        if(notNull)
-        {
-            var x=[[${x}]];
-            var y=[[${y}]];
-            let marker = new L.Marker([x, y]);
+        if(notNull) {
+            var x = [[${x}]];
+            var y = [[${y}]];
+            let marker = new L.Marker([y, x]);
             marker.addTo(map);
         }
 
+        navigator.geolocation.getCurrentPosition(function(position) {
+            // Get the user's current latitude and longitude coordinates
+            var lat = position.coords.latitude;
+            var lng = position.coords.longitude;
+            let marker = L.marker([lat, lng]).addTo(map);
 
+            //TODO: Ovaj kodov dolu ne rabotit, probaj da najs neso so prarjt ruta asolna
+            /*
+            // Set the API key and endpoint URL
+var apiKey = "YOUR_API_KEY";
+var endpoint = "https://api.openrouteservice.org/v2/directions/";
 
+// Set the parameters for the API request
+var params = "?api_key=" + apiKey + "&start=12.34,56.78&end=90.12,34.56";
+
+// Make the GET request to the API
+var url = endpoint + params;
+fetch(url)
+.then(function(response) {
+// The request was successful
+if (response.ok) {
+  // Read the response data
+  return response.json();
+} else {
+  // There was an error with the request
+  console.error("Error making GET request to API: " + response.statusText);
+}
+})
+.then(function(json) {
+// The JSON data has been received
+// You can now process the data as needed
+// ...
+})
+.catch(function(error) {
+// There was an error with the fetch function
+console.error("Error making GET request to API: " + error);
+});
+             */
+            // // Set the API key and endpoint URL
+            // var apiKey = "5b3ce3597851110001cf6248a274eb7fdb8a4fa182d5fe893855f03a";
+            // var endpoint = "https://api.openrouteservice.org/v2/directions/foot-walking";
+            //
+            // // Set the parameters for the API request
+            // var params = "?api_key=" + apiKey + "&start=" + lat + "," + lng + "&end=" + y + "," + x;
+            //
+            // // Make the GET request to the API
+            // var url = endpoint + params;
+            // fetch(url)
+            //     .then(function (response) {
+            //         return response.json();
+            //     })
+            //     .then(function (json) {
+            //         // Extract the route data from the JSON response
+            //         var coordinates = json.features[0].geometry.coordinates;
+            //
+            //         // Convert the coordinates to LatLng objects
+            //         var latLngs = coordinates.map(function (coordinate) {
+            //             return L.latLng(coordinate[1], coordinate[0]);
+            //         });
+            //
+            //         // Create a new Leaflet map
+            //         var map = L.map('map').setView([lat, lng], 13);
+            //
+            //         // Create a new polyline using the LatLng objects
+            //         var polyline = L.polyline(latLngs, {color: 'green'}).addTo(map);
+            //         map.fitBounds(polyline.getBounds());
+            //
+            //     });
+        });
     </script>
 
 
-
-<!--            <iframe id="mapa-iframe" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"-->
-<!--                    src="https://www.openstreetmap.org/export/embed.html?bbox=21.34626388549805%2C41.96957368609519%2C21.459560394287113%2C42.02353839996035&amp;layer=mapnik"-->
-<!--                    style="border: 1px solid black">-->
-<!--            </iframe>-->
-<!--            <br/>-->
-<!--            <small><a href="https://www.openstreetmap.org/#map=14/41.9966/21.4029%22%3E">View Larger Map</a></small>-->
-<!--        </div>-->
-<!--            TODO: View larger map ako e vozmozno-->
+    <!--            <iframe id="mapa-iframe" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"-->
+    <!--                    src="https://www.openstreetmap.org/export/embed.html?bbox=21.34626388549805%2C41.96957368609519%2C21.459560394287113%2C42.02353839996035&amp;layer=mapnik"-->
+    <!--                    style="border: 1px solid black">-->
+    <!--            </iframe>-->
+    <!--            <br/>-->
+    <!--            <small><a href="https://www.openstreetmap.org/#map=14/41.9966/21.4029%22%3E">View Larger Map</a></small>-->
+    <!--        </div>-->
+    <!--            TODO: View larger map ako e vozmozno-->
 </div>
 </body>
 <!--
