@@ -8,7 +8,6 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="untitled6" />
-        <module name="DiansProekt" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
