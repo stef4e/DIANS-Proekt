@@ -11,7 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.net.http.HttpResponse;
-
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Controller
@@ -24,8 +25,20 @@ public class MapController {
     }
 
     @GetMapping("/")
-    public String indexPage() throws IOException {
+    public String indexPage(Model model) throws IOException {
 
+        List<Double> xCoordinates=new ArrayList<>();
+        List<Double> yCoordinates=new ArrayList<>();
+
+        for (Lokal l : lokalService.findAll())
+        {
+            xCoordinates.add(l.getXCoordinates());
+            yCoordinates.add(l.getYCoordinates());
+        }
+
+        model.addAttribute("xCoordinates", xCoordinates);
+        model.addAttribute("yCoordinates", yCoordinates);
+        model.addAttribute("count", lokalService.findAll().size());
         return "index";
     }
 

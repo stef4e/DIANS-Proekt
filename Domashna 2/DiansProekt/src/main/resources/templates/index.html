@@ -78,6 +78,11 @@
     <br/>
     <div id="map"></div>
 
+    <style>
+        img.huechangeHome { filter: hue-rotate(120deg); }
+        img.huechangeDesired { filter: hue-rotate(300deg); }
+    </style>
+
     <script th:inline="javascript">
 
         let map = L.map('map', {
@@ -92,85 +97,37 @@
 
         }).addTo(map);
 
+        xCoordinates=[[${xCoordinates}]]
+        yCoordinates=[[${yCoordinates}]]
+
+        for (let i=0; i<[[${count}]]; i++)
+        {
+            var oneXCoordinate=xCoordinates[i];
+            var oneYCoordinate=yCoordinates[i];
+            let markerAll = new L.Marker([oneYCoordinate, oneXCoordinate]);
+            markerAll.addTo(map);
+        }
+
         var notNull=[[${lokal} != null]];
 
         if(notNull) {
             var x = [[${x}]];
             var y = [[${y}]];
-            let marker = new L.Marker([y, x]);
-            marker.addTo(map);
+            let markerDesired = new L.Marker([y, x]);
+            markerDesired.addTo(map);
+            markerDesired._icon.classList.add("huechangeDesired");
         }
 
         navigator.geolocation.getCurrentPosition(function(position) {
             // Get the user's current latitude and longitude coordinates
             var lat = position.coords.latitude;
             var lng = position.coords.longitude;
-            let marker = L.marker([lat, lng]).addTo(map);
-
-            //TODO: Ovaj kodov dolu ne rabotit, probaj da najs neso so prarjt ruta asolna
-            /*
-            // Set the API key and endpoint URL
-var apiKey = "YOUR_API_KEY";
-var endpoint = "https://api.openrouteservice.org/v2/directions/";
-
-// Set the parameters for the API request
-var params = "?api_key=" + apiKey + "&start=12.34,56.78&end=90.12,34.56";
-
-// Make the GET request to the API
-var url = endpoint + params;
-fetch(url)
-.then(function(response) {
-// The request was successful
-if (response.ok) {
-  // Read the response data
-  return response.json();
-} else {
-  // There was an error with the request
-  console.error("Error making GET request to API: " + response.statusText);
-}
-})
-.then(function(json) {
-// The JSON data has been received
-// You can now process the data as needed
-// ...
-})
-.catch(function(error) {
-// There was an error with the fetch function
-console.error("Error making GET request to API: " + error);
-});
-             */
-            // // Set the API key and endpoint URL
-            // var apiKey = "5b3ce3597851110001cf6248a274eb7fdb8a4fa182d5fe893855f03a";
-            // var endpoint = "https://api.openrouteservice.org/v2/directions/foot-walking";
-            //
-            // // Set the parameters for the API request
-            // var params = "?api_key=" + apiKey + "&start=" + lat + "," + lng + "&end=" + y + "," + x;
-            //
-            // // Make the GET request to the API
-            // var url = endpoint + params;
-            // fetch(url)
-            //     .then(function (response) {
-            //         return response.json();
-            //     })
-            //     .then(function (json) {
-            //         // Extract the route data from the JSON response
-            //         var coordinates = json.features[0].geometry.coordinates;
-            //
-            //         // Convert the coordinates to LatLng objects
-            //         var latLngs = coordinates.map(function (coordinate) {
-            //             return L.latLng(coordinate[1], coordinate[0]);
-            //         });
-            //
-            //         // Create a new Leaflet map
-            //         var map = L.map('map').setView([lat, lng], 13);
-            //
-            //         // Create a new polyline using the LatLng objects
-            //         var polyline = L.polyline(latLngs, {color: 'green'}).addTo(map);
-            //         map.fitBounds(polyline.getBounds());
-            //
-            //     });
+            let markerHome = L.marker([lat, lng]);
+            markerHome.addTo(map);
+            markerHome._icon.classList.add("huechangeHome");
         });
     </script>
+
 
 
     <!--            <iframe id="mapa-iframe" width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"-->

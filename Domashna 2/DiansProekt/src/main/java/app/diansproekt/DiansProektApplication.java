@@ -9,6 +9,7 @@ public class DiansProektApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(DiansProektApplication.class, args);
+
 	}
 
 
