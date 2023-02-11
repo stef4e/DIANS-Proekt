@@ -11,10 +11,9 @@ public class PipeAndFilterProblem{
             pipe.addFilter(filterByName);
             pipe.addFilter(latinToCyrillicFilter);
 
-            //Scanner scanner = new Scanner(new File("C:\\Users\\user\\Documents\\Финки 5 Семестар\\Дизајн и архитектура на софтвер\\Лабораториски Вежби\\Домашна 1\\DIANS\\DIANS\\src\\main\\resources\\map.csv"));
+
             Scanner scanner = new Scanner(new File("C:\\Users\\pavel\\Desktop\\DIANS\\src\\main\\resources\\map.csv"));
             scanner.useDelimiter(",");
-            //FileWriter writer = new FileWriter("C:\\Users\\user\\Documents\\Финки 5 Семестар\\Дизајн и архитектура на софтвер\\Лабораториски Вежби\\Домашна 1\\DIANS\\DIANS\\src\\main\\resources\\Output.csv");
             FileWriter writer = new FileWriter("C:\\Users\\pavel\\Desktop\\DIANS\\src\\main\\resources\\Output.csv");
 
             while (scanner.hasNextLine()) {
