@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class LokalServiceImplementations implements LokalService {
 
-    JpaLokalRepository jpaLokalRepository;
+    private final JpaLokalRepository jpaLokalRepository;
 
     public LokalServiceImplementations(JpaLokalRepository jpaLokalRepository) {
         this.jpaLokalRepository = jpaLokalRepository;

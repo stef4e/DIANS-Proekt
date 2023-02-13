@@ -1,16 +1,16 @@
 public class DatabaseInfo {
 
-    String name, identifier, pointOrPolygon, contactInfo;
+    String name, barOrClub, coordinates, contactInfo;
 
-    public DatabaseInfo(String engName, String identifier, String pointOrPolygon, String contactInfo) {
-        this.name = engName;
-        this.identifier = identifier;
-        this.pointOrPolygon = pointOrPolygon;
+    public DatabaseInfo(String name, String barOrClub, String coordinates, String contactInfo) {
+        this.name = name;
+        this.barOrClub = barOrClub;
+        this.coordinates = coordinates;
         this.contactInfo = contactInfo;
     }
 
     @Override
     public String toString() {
-        return String.format("%s,%s,%s,%s", name, identifier, pointOrPolygon, contactInfo);
+        return String.format("%s,%s,%s,%s", name, barOrClub, coordinates, contactInfo);
     }
 }

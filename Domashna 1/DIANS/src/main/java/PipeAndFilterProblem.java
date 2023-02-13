@@ -10,11 +10,11 @@ public class PipeAndFilterProblem{
             CyrillicToLatinFilter latinToCyrillicFilter = new CyrillicToLatinFilter();
             pipe.addFilter(filterByName);
             pipe.addFilter(latinToCyrillicFilter);
-
-
-            Scanner scanner = new Scanner(new File("C:\\Users\\pavel\\Desktop\\DIANS\\src\\main\\resources\\map.csv"));
+            //reads the initial database
+            Scanner scanner = new Scanner(new File("C:\\Users\\pavel\\Documents\\GitHub\\DIANS-Proekt\\Domashna 1\\DIANS\\src\\main\\resources\\map.csv"));
             scanner.useDelimiter(",");
-            FileWriter writer = new FileWriter("C:\\Users\\pavel\\Desktop\\DIANS\\src\\main\\resources\\Output.csv");
+            //location of the improved database
+            FileWriter writer = new FileWriter("C:\\Users\\pavel\\Documents\\GitHub\\DIANS-Proekt\\Domashna 1\\DIANS\\src\\main\\resources\\Output.csv");
 
             while (scanner.hasNextLine()) {
                 String s = pipe.runFilter(scanner.nextLine());

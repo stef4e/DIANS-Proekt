@@ -8,9 +8,6 @@ import java.util.List;
 
 @Repository
 public interface JpaLokalRepository extends JpaRepository<Lokal, Long> {
-
     Lokal findByName(String name);
-
     List<Lokal> findAll();
-
 }

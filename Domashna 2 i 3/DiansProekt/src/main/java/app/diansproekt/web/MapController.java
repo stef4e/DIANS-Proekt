@@ -38,7 +38,7 @@ public class MapController {
 
         model.addAttribute("xCoordinates", xCoordinates);
         model.addAttribute("yCoordinates", yCoordinates);
-        model.addAttribute("count", lokalService.findAll().size());
+        model.addAttribute("count", lokalService.findAll().size()); // adds the number of locales to the model
         return "index";
     }
 
@@ -51,8 +51,8 @@ public class MapController {
             model.addAttribute("lokal", l);
             model.addAttribute("name", l.getName());
             model.addAttribute("barOrClub", l.getBarOrClub());
-            model.addAttribute("x", l.getXCoordinates());
-            model.addAttribute("y", l.getYCoordinates());
+            model.addAttribute("x", l.getXCoordinates()); // adds the coordinate of the geographical X-Axis to the model
+            model.addAttribute("y", l.getYCoordinates()); // adds the coordinate of the geographical Y-Axis to the model
             model.addAttribute("contactInfo", l.getContactInfo());
         }
         return "index";

@@ -3,9 +3,9 @@ import java.io.StringBufferInputStream;
 public class FilterByName implements Filter<String> {
     @Override
     public String execute(String input) {
-        input = input.replace("\"", "");
-        String[] parts = input.split(",", -1);
-        if (parts.length < 20) {
+        input = input.replace("\"", ""); //removing air quotes to have more viable results
+        String[] parts = input.split(",", -1); //constructs an array of every string seperated by a comma
+        if (parts.length < 20) { // to invalidate places that the database didn't have ample information on
             return null;
         }
         String barOrNightclub = parts[108];
@@ -41,7 +41,7 @@ public class FilterByName implements Filter<String> {
             if (coordinates.contains("POLYGON")) {
                 String output = coordinates.replace("POLYGON ", "");
                 output = output.replace("((", "");
-                output = output.replace(" ", ",");
+                output = output.replace(" ", ","); //tidying up the coordinates so we have more readable results
                 if(output.isEmpty()){
                     return null;
                 }
@@ -50,7 +50,7 @@ public class FilterByName implements Filter<String> {
                 String output = coordinates.replace("POINT ", "");
                 output = output.replace("(", "");
                 output = output.replace(" ", ",");
-                output = output.replace(")", "");
+                output = output.replace(")", ""); //tidying up the coordinates so we have more readable results
                 if(output.isEmpty()){
                     return null;
                 }
