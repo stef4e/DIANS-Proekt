@@ -1,7 +1,27 @@
 version: "3"
+
 services:
+
+  back-end:
+    # Configuration for building the docker image for the backend service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080" # Forward the exposed port 8080 on the container to port 8080 on the host machine
+
+    environment: # Pass environment variables to the service
+      DB_URL: jdbc:postgresql://dians_Database:5432/diansDatabase
+      DB_USERNAME: dians
+      DB_PASSWORD: dians123
+    networks: # Networks to join (Services on the same network can communicate with each other using their name)
+      - lokali
+    depends_on:
+      - wp-db
+
   #  Create a service named db.
   wp-db:
+
     #   Use the Docker Image postgres. This will pull the newest release.
     image: "postgres"
     #   Give the container the name my_postgres. You can changes to something else.
@@ -14,9 +34,17 @@ services:
     #   Maps port 5432 (localhost) to port 5432 on the container. You can change the ports to fix your needs.
     ports:
       - "5432:5432"
+    expose:
+      - "5432"
+    command: -p 5432
     #   Set a volume some that database is not lost after shutting down the container.
     #   I used the name postgres-data but you can changed it to something else.
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    networks:
+      - lokali
 volumes:
   postgres-data:
+
+networks:
+  lokali:
